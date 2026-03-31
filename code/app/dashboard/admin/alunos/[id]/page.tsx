@@ -22,7 +22,7 @@ export default function PerfilAluno() {
     }
   }, [id]);
 
-  const fetchAluno = async () => {
+const fetchAluno = async () => {
     const { data, error } = await supabase
       .from('alunos')
       .select(`nome, turno, academias (nome)`)
@@ -30,9 +30,10 @@ export default function PerfilAluno() {
       .single();
 
     if (data) {
-      setNome(data.nome || '');
-      setTurno(data.turno || 'manha');
-      setAcademiaNome(data.academias?.nome || '');
+      const aluno = data as any;
+      setNome(aluno.nome || '');
+      setTurno(aluno.turno || 'manha');
+      setAcademiaNome(aluno.academias?.nome || '');
     }
   };
 
